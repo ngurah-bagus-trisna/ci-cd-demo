@@ -2,10 +2,14 @@ name: Hello CI
 on: 
     - push
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-            - name: say hello
-              run: echo "Hello from CI/CD!"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: say hello
+          run: echo "Hello from CI/CD!"
+        - name: Greeting from variable
+          run: echo "Hello from ${{ env.GREETING }}"
+        - name: Echo secret
+          run: echo "Secret is ${{ secrets.SECRET_MSG }}"
