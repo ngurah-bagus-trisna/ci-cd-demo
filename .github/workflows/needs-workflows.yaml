@@ -1,0 +1,25 @@
+name: Needs worflows
+on: 
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Build stage
+          run: |
+            echo "Hello from CI/CD!"
+            echo "Running on build job"
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+        - name: Greeting from variable
+          run: echo "Hello from ${{ env.GREETING }}"
+        - name: Echo secret
+          run: echo "Secret is ${{ secrets.SECRET_MSG }}"
+        - name: Test stage
+          run: |
+            echo "Running on test job"
+            echo "This job depends on the build job"
