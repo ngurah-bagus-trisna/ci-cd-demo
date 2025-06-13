@@ -1,4 +1,4 @@
-name: Hello CI
+name: Cache Workflows
 on: 
   push:
     branches:
@@ -16,7 +16,7 @@ jobs:
         - name: Echo secret
           run: echo "Secret is ${{ secrets.SECRET_MSG }}"
         - name: Cache node modules 
-          uses: actions/cache@v2
+          uses: actions/cache@v4
           with:
             path: ~/.npm
             key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

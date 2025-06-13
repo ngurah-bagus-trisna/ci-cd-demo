@@ -1,4 +1,4 @@
-name: Hello CI
+name: Matrix Workflow
 on: 
     workflow_dispatch:
 jobs:
