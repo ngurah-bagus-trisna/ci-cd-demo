@@ -1,0 +1,20 @@
+name: Hello CI
+on: 
+    - push
+jobs:
+  build:
+    strategy:
+      matrix: 
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: say hello
+          run: echo "Hello from CI/CD!"
+        - name: Greeting from variable
+          run: echo "Hello from ${{ env.GREETING }}"
+        - name: Echo secret
+          run: echo "Secret is ${{ secrets.SECRET_MSG }}"
+        - name: Display OS
+          run: echo "Running on ${{ matrix.os }}"
