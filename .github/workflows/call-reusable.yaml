@@ -7,4 +7,4 @@ jobs:
     uses: ./.github/workflows/reusable.yaml
     with:
       env_name: staging
-      script_path: ./script/staging.sh
+      script_name: ./script/staging.sh
