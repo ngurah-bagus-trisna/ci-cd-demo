@@ -1,0 +1,25 @@
+name: Concurency workflows
+on: 
+  - push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  concurrency-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run concurrency workflow
+        run: echo "This is a concurrency workflow that will run only once per branch."
+
+      - name: Show run number
+        run: |
+          echo "Run number: ${{ github.run_number }} on ref ${{ github.ref }}"
+      - name: Simulate work
+        run: |
+          echo "Simulating work..."
+          sleep 30
+          echo "Work done!"
+        
