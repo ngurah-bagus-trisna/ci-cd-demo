@@ -1,0 +1,18 @@
+name: Conditional Workflow
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Running tests on main branch"
+      - name: Lint JS files
+        if: contains(join(github.event.head_commit.modified, ','), '.js')
+        run: |
+          echo "Linting JavaScript files"
