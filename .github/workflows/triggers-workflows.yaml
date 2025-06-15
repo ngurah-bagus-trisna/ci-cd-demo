@@ -1,0 +1,21 @@
+name: artifacts-workflows
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *' # Every day at midnight
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Get event
+          run: |
+            echo "Report at $(date)" > report.txt
+            echo "Triggered by ${{ github.event_name }}" >> report.txt
+        - name: Upload report
+          uses: actions/upload-artifact@v4
+          with:
+            name: report
+            path: report.txt
