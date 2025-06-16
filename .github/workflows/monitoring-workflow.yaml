@@ -1,0 +1,31 @@
+name: Observability & monitoring
+on:
+  push:
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    services:
+      prometheus:
+        image: prom/prometheus:latest
+        ports:
+          - 9090:9090
+        options: >-
+          --mount type=bind,source=${{ github.workspace }}/monitoring/prometheus.yml,target=/etc/prometheus/prometheus.yml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Wait prometheus to be ready
+        run: |
+          echo "Waiting for Prometheus to be ready..."
+          sleep 10
+          echo "Prometheus should be ready now."
+      - name: Run Prometheus
+        run: |
+          echo "scrape metrics"
+          curl http://localhost:9090/metrics | head -n 10 > prometheus_metrics.txt
+
+      - name: Upload metrics to artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prometheus-metrics
+          path: prometheus_metrics.txt
