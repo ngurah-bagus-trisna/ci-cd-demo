@@ -9,8 +9,8 @@ jobs:
         image: prom/prometheus:latest
         ports:
           - 9090:9090
-        options: >-
-          --mount type=bind,source=${{ github.workspace }}/monitoring/prometheus.yml,target=/etc/prometheus/prometheus.yml
+        volumes:
+          - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
