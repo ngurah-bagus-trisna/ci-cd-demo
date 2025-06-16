@@ -14,7 +14,8 @@ jobs:
       - name: Wait prometheus to be ready
         run: |
           echo "Waiting for Prometheus to be ready..."
-          sleep 10
+          sleep 30s
+          docker logs prometheus
           echo "Prometheus should be ready now."
 
       - name: Run Prometheus
