@@ -19,6 +19,10 @@ jobs:
           echo "Waiting for Prometheus to be ready..."
           sleep 10
           echo "Prometheus should be ready now."
+      - name: Check configuration inject to prometheus
+        run: |
+          echo "Check prometheus configuration"
+          docker exec prometheus cat /etc/prometheus/prometheus.yml
       - name: Run Prometheus
         run: |
           echo "scrape metrics"
