@@ -10,7 +10,7 @@ jobs:
       - name: Running prometheus container
         run: |
           cd monitoring
-          docker-compose up -d 
+          docker compose up -d
       - name: Wait prometheus to be ready
         run: |
           echo "Waiting for Prometheus to be ready..."
