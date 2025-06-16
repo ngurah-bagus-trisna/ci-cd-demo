@@ -9,8 +9,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Running prometheus container
         run: |
-          cd monitoring
-          docker compose up -d
+          docker run -d \
+            --name prometheus \
+            -p 9090:9090 \
+            -v ${{ github.workspace }}/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml \
+            prom/prometheus:latest \
+            --config.file=/etc/prometheus/prometheus.yml \
+            --web.listen-address=:9090
       - name: Wait prometheus to be ready
         run: |
           echo "Waiting for Prometheus to be ready..."
