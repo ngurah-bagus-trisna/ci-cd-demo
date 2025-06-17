@@ -19,9 +19,9 @@ jobs:
       - name: Cleanuup old terraform state files
         run: |
           find ${{ github.workspace }}/test -name "*.tfstate" -mtime +7 -delete
-      - name: cleanup temp workspace
+      - name: cleanup temporary workspace
         run: |
-          find ${{ github.workspace }}/temp -type f -mtime +7 -delete
+          rm -rf ${{ github.workspace }}/tmp/* || true
       - name: Generate report
         run: |
           echo "Cleanup completed successfully on $(date)" > ${{ github.workspace }}/cleanup_report.txt
