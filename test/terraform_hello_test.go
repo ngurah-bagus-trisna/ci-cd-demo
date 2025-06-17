@@ -5,6 +5,7 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 )
 
 func TestHelloFile(t *testing.T) {
@@ -19,5 +20,5 @@ func TestHelloFile(t *testing.T) {
 	
 	content, err := ioutil.ReadFile("hello.txt")
 	assert.NoError(t, err)
-	assert.contains(t, string(content), "Hello, OpenTofu!")
+	assert.Contains(t, string(content), "Hello, OpenTofu!")
 }	
