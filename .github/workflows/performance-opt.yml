@@ -1,0 +1,52 @@
+name: Performance optimization
+on:
+  push:
+    branches:
+    - main
+jobs:
+  infra-cache:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Cache terraform providers
+      uses: actions/cache@v4
+      with:
+        path: .terrafrom/plugins
+        key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
+        restore-keys: |
+          ${{ runner.os }}-terraform-
+    
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.7.2
+
+    - name: Terraform init & Apply
+      run: |
+        terraform init 
+        terraform plan -out=tfplan.out
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Cache node modules
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Build docker image with layer cache
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: Dockerfile
+        push: false
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        tags: ci-cd-demo:latest
