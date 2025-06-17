@@ -19,6 +19,6 @@ jobs:
           go-version: '1.20'
       
       - name: Run terratest
-        working-directory: tests
+        working-directory: test
         run: |
           go test -v
