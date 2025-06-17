@@ -16,6 +16,6 @@ provider "local" {
 
 resource "local_file" "hello_world" {
   content  = "Hello, OpenTofu!"
-  filename = "${path.module}/hello.txt"
+  filename = "${path.module}/test/hello.txt"
   
 }
