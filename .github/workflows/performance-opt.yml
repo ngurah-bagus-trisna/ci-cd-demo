@@ -52,4 +52,4 @@ jobs:
         push: false
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        tags: ci-cd-demo:latest
+        tags: ci-cd-demo:latesti 
